@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  web:
+    build: ./djangobnb_backend
+
+    # This is important to avoid buffering issues and
+    # see print statements in real-time in the terminal 
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./djangobnb_backend/:/usr/src/djangobnb_backend
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_PASSWORD=postgrespassword
+      - POSTGRES_DB=postgresdb
+
+volumes:
+  postgres_data:
