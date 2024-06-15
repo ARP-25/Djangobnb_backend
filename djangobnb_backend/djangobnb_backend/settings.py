@@ -33,12 +33,37 @@ AUTH_USER_MODEL = 'useraccount.User'
 # For allauth login
 SITE_ID = 1
 
-WEBSITE_URL = 'http://localhost:8000'
+if DEBUG:
+    WEBSITE_URL = 'http://localhost:8000'
+else:
+    WEBSITE_URL = 'http://164.90.164.114:1337'
+
 
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
+    # development frontend
     'http://localhost:3000',
+    # production frontend
+    'http://164.90.164.114:1337',
+    # production backend
+    'http://164.90.164.114',
+]
+CORS_TRUSTED_ORIGINS = [
+    # development frontend
+    'http://localhost:3000',
+    # production frontend
+    'http://164.90.164.114:1337',
+    # production backend
+    'http://164.90.164.114',
+]
+CORS_ORIGINS_WHITELIST = [
+    # development frontend
+    'http://localhost:3000',
+    # production frontend
+    'http://164.90.164.114:1337',
+    # production backend
+    'http://164.90.164.114',
 ]
 
 
