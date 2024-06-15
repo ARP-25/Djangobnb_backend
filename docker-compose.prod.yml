@@ -13,7 +13,8 @@ services:
     # see print statements in real-time in the terminal 
     environment:
       - PYTHONUNBUFFERED=1
-    command: gunicorn djangobnb_backend.wsgi:application 0.0.0.0:8000 --bind 0.0.0.0:8000
+    command: gunicorn djangobnb_backend.wsgi:application --bind 0.0.0.0:8000
+
     expose:
       - 8000
     volumes:
