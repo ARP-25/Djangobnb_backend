@@ -65,7 +65,11 @@ CORS_ORIGINS_WHITELIST = [
     # production backend
     'http://164.90.164.114',
 ]
-
+CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
+CSRF_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
 
 # SIMEPLE_JWT settings
 SIMPLE_JWT = {
@@ -79,6 +83,7 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
 }
+
 
 # Allauth settings
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
