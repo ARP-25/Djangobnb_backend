@@ -3,18 +3,16 @@ services:
   nginx:
     build: ./nginx
     ports:
-      - 1337:80
+      - 80:80
     depends_on:
       - web
+      - daphne
+
   web:
     build: ./djangobnb_backend
-
-    # This is important to avoid buffering issues and
-    # see print statements in real-time in the terminal 
     environment:
       - PYTHONUNBUFFERED=1
     command: gunicorn djangobnb_backend.wsgi:application --bind 0.0.0.0:8000
-
     expose:
       - 8000
     volumes:
@@ -23,14 +21,17 @@ services:
       - ./.env.dev
     depends_on:
       - db
-      - daphne
+
   daphne:
     build: ./djangobnb_backend
     command: daphne -b 0.0.0.0 -p 8002 djangobnb_backend.asgi:application
-    ports:
-      - 8002:8002
+    expose:
+      - 8002
     env_file:
       - ./.env.dev
+    depends_on:
+      - db
+
   db:
     image: postgres:15
     volumes:
