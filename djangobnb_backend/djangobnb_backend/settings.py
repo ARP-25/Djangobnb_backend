@@ -33,10 +33,15 @@ AUTH_USER_MODEL = 'useraccount.User'
 # For allauth login
 SITE_ID = 1
 
+
+# Check if the application is running in debug mode
 if DEBUG:
+    # If in debug mode, set the website URL to the local development server
     WEBSITE_URL = 'http://localhost:8000'
 else:
+    # If not in debug mode (i.e., in production), set the website URL to the public IP address and port
     WEBSITE_URL = 'http://164.90.164.114:1337'
+
 
 
 
@@ -67,16 +72,18 @@ CORS_ORIGINS_WHITELIST = [
 ]
 
 # 
-# CORS_ALLOW_CREDENTIALS = True
-# SESSION_COOKIE_SECURE = not DEBUG
-# CSRF_COOKIE_SECURE = not DEBUG
-# SESSION_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
-# CSRF_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
+# Cors Settings
 CORS_ALLOW_CREDENTIALS = True
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
+CSRF_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
+
+# CORS_ALLOW_CREDENTIALS = True
+# SESSION_COOKIE_SECURE = False
+# CSRF_COOKIE_SECURE = False
+# SESSION_COOKIE_SAMESITE = 'Lax'
+# CSRF_COOKIE_SAMESITE = 'Lax'
 
 
 # SIMEPLE_JWT settings
