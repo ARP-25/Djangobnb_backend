@@ -19,7 +19,7 @@ services:
     volumes:
       - ./djangobnb_backend/:/usr/src/djangobnb_backend # Mounts the current directory to /usr/src/djangobnb_backend in the container
     env_file:
-      - ./.env.prod # Loads environment variables from the .env.prod file
+      - ./.env # Loads environment variables from the .env file
     depends_on:
       - db # Ensures the db service starts before the web service
       - daphne # Ensures the daphne service starts before the web service
