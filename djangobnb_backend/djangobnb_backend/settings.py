@@ -47,27 +47,26 @@ else:
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    # development frontend
     'http://localhost:3000',
-    # production frontend
     'http://164.90.164.114:1337',
-    # production backend
     'http://164.90.164.114',
 ]
+
 CORS_TRUSTED_ORIGINS = [
-    # development frontend
     'http://localhost:3000',
-    # production frontend
     'http://164.90.164.114:1337',
-    # production backend
     'http://164.90.164.114',
 ]
-CORS_ORIGINS_WHITELIST = [
-    # development frontend
+
+CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
-    # production frontend
     'http://164.90.164.114:1337',
-    # production backend
+    'http://164.90.164.114',
+]
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+    'http://164.90.164.114:1337',
     'http://164.90.164.114',
 ]
 
