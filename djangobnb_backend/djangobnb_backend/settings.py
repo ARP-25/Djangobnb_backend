@@ -26,6 +26,7 @@ else:
 
 # Brings the allowed hosts from the environment variable
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ')
+print(f"Allowed Hosts ================= {ALLOWED_HOSTS}")
 
 # Setting default usermodel to custom user model
 AUTH_USER_MODEL = 'useraccount.User'
