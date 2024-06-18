@@ -13,7 +13,7 @@ services:
     volumes:
       - ./djangobnb_backend/:/usr/src/djangobnb_backend
     env_file:
-      - ./.env.dev
+      - ./.env
     depends_on:
       - db
   db:
