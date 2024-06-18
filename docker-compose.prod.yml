@@ -4,10 +4,13 @@ services:
   nginx:
     build: ./nginx
     ports:
+    # External Port (1337): This is the port on your host machine (e.g., DigitalOcean server) that is exposed to the outside world. Nginx listens for incoming traffic on this port.
+    # Internal Port (80): Inside the Nginx container, it listens on port 80. This is standard for web servers and makes configuration simpler inside the container.
       - "1337:80"
     depends_on:
       - web
       - daphne
+      - frontend
 
   web:
     build: ./djangobnb_backend
@@ -15,7 +18,7 @@ services:
       - PYTHONUNBUFFERED=1
     command: gunicorn djangobnb_backend.wsgi:application --bind 0.0.0.0:8000
     expose:
-      - "8000"
+      - "8000" # Expose port 8000 for inter-container networking
     volumes:
       - ./djangobnb_backend/:/usr/src/djangobnb_backend
     env_file:
@@ -27,7 +30,7 @@ services:
     build: ./djangobnb_backend
     command: daphne -b 0.0.0.0 -p 8002 djangobnb_backend.asgi:application
     expose:
-      - "8002"
+      - "8002" # Expose port 8002 for inter-container networking
     env_file:
       - ./.env
     depends_on:
@@ -42,5 +45,13 @@ services:
       - POSTGRES_PASSWORD=postgrespassword
       - POSTGRES_DB=postgresdb
 
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - web
+      - daphne
+      
 volumes:
   postgres_data:
