@@ -1,47 +1,46 @@
-version: '3.9' # Specifies the version of the Compose file format
+version: '3.9'
 
 services:
   nginx:
-    build: ./nginx # Builds the nginx image from the Dockerfile located in the ./nginx directory
-    ports:   
-      - 1337:80 # 1337 is the custom port on the host machine, 80 is the port in the nginx container
+    build: ./nginx
+    ports:
+      - "1337:80"
     depends_on:
-      - web # Ensures the web service starts before nginx
-      - daphne # Ensures the daphne service starts before nginx
+      - web
+      - daphne
 
   web:
-    build: ./djangobnb_backend # Builds the web image from the Dockerfile located in the ./djangobnb_backend directory
+    build: ./djangobnb_backend
     environment:
-      - PYTHONUNBUFFERED=1 # Ensures Python output is unbuffered, useful for logging
-    command: gunicorn djangobnb_backend.wsgi:application --bind 0.0.0.0:8000 # Command to run the Django application using Gunicorn
+      - PYTHONUNBUFFERED=1
+    command: gunicorn djangobnb_backend.wsgi:application --bind 0.0.0.0:8000
     expose:
-      - 8000 # Exposes port 8000 to linked services, but not to the host machine
+      - "8000"
     volumes:
-      - ./djangobnb_backend/:/usr/src/djangobnb_backend # Mounts the current directory to /usr/src/djangobnb_backend in the container
+      - ./djangobnb_backend/:/usr/src/djangobnb_backend
     env_file:
-      - ./.env # Loads environment variables from the .env file
+      - ./.env
     depends_on:
-      - db # Ensures the db service starts before the web service
-      - daphne # Ensures the daphne service starts before the web service
+      - db
 
   daphne:
-    build: ./djangobnb_backend # Builds the daphne image from the Dockerfile located in the ./djangobnb_backend directory
-    command: daphne -b 0.0.0.0 -p 8002 djangobnb_backend.asgi:application # Command to run the Django ASGI application using Daphne
-    ports:
-      - 8002:8002 # Maps port 8002 on the host to port 8002 in the daphne container
+    build: ./djangobnb_backend
+    command: daphne -b 0.0.0.0 -p 8002 djangobnb_backend.asgi:application
+    expose:
+      - "8002"
     env_file:
-      - ./.env # Loads environment variables from the .env file
+      - ./.env
     depends_on:
-      - db # Ensures the db service starts before the daphne service
+      - db
 
   db:
-    image: postgres:15 # Uses the official Postgres 15 image
+    image: postgres:15
     volumes:
-      - postgres_data:/var/lib/postgresql/data # Mounts the postgres_data volume to persist database data
+      - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=postgresuser # Sets the Postgres user
-      - POSTGRES_PASSWORD=postgrespassword # Sets the Postgres password
-      - POSTGRES_DB=postgresdb # Sets the name of the Postgres database
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_PASSWORD=postgrespassword
+      - POSTGRES_DB=postgresdb
 
 volumes:
-  postgres_data: # Defines the volume for persisting Postgres data
+  postgres_data:
