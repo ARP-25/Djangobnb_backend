@@ -6,7 +6,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -62,13 +61,6 @@ CORS_TRUSTED_ORIGINS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',
-    'http://164.90.164.114:1337',
-    'http://164.90.164.114:3000',
-    'http://164.90.164.114',
-]
-
-CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://164.90.164.114:1337',
     'http://164.90.164.114:3000',
