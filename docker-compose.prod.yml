@@ -1,5 +1,6 @@
 version: '3.9'
 
+
 services:
   nginx:
     build: ./nginx
@@ -11,8 +12,15 @@ services:
       - web
       - daphne
       - frontend
+
+
+    # Newly added
+    # This volume is used to store media and static files uploaded by users. It is shared between the Nginx and Django containers.
     volumes:
       - media_volume:/usr/src/djangobnb_backend/media
+      - static_volume:/usr/src/djangobnb_backend/static
+
+
   web:
     build: ./djangobnb_backend
     environment:
@@ -22,11 +30,19 @@ services:
       - "8000" # Expose port 8000 for inter-container networking
     volumes:
       - ./djangobnb_backend/:/usr/src/djangobnb_backend
+
+
+      # Newly added
+      # This volume is used to store media and static files uploaded by users. It is shared between the Nginx and Django containers.
       - media_volume:/usr/src/djangobnb_backend/media
+      - static_volume:/usr/src/djangobnb_backend/static
+
+
     env_file:
       - ./.env
     depends_on:
       - db
+
 
   daphne:
     build: ./djangobnb_backend
@@ -38,6 +54,7 @@ services:
     depends_on:
       - db
 
+
   db:
     image: postgres:15
     volumes:
@@ -47,6 +64,7 @@ services:
       - POSTGRES_PASSWORD=postgrespassword
       - POSTGRES_DB=postgresdb
 
+
   frontend:
     build: ../Djangobnb_frontend
     ports:
@@ -55,6 +73,12 @@ services:
       - web
       - daphne
 
+
 volumes:
   postgres_data:
+
+
+  # Newly added
+  # This volume is used to store media and static files uploaded by users. It is shared between the Nginx and Django containers.
   media_volume:
+  static_volume:
