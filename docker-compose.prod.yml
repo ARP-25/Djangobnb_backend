@@ -11,7 +11,8 @@ services:
       - web
       - daphne
       - frontend
-
+    volumes:
+      - media_volume:/usr/src/djangobnb_backend/media
   web:
     build: ./djangobnb_backend
     environment:
@@ -21,6 +22,7 @@ services:
       - "8000" # Expose port 8000 for inter-container networking
     volumes:
       - ./djangobnb_backend/:/usr/src/djangobnb_backend
+      - media_volume:/usr/src/djangobnb_backend/media
     env_file:
       - ./.env
     depends_on:
@@ -55,3 +57,4 @@ services:
 
 volumes:
   postgres_data:
+  media_volume:
