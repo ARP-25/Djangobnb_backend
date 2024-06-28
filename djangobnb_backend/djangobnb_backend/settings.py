@@ -23,7 +23,7 @@ else:
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ')
 print(f"Allowed Hosts ================= {ALLOWED_HOSTS}")
 
-# Setting default usermodel to custom user model
+# Setting default usermodel to custo104.248.34.81
 AUTH_USER_MODEL = 'useraccount.User'
 
 # For allauth login
@@ -35,22 +35,22 @@ if DEBUG:
     WEBSITE_URL = 'http://localhost:8000'
 else:
     # If not in debug mode (i.e., in production), set the website URL to the public IP address and port
-    WEBSITE_URL = 'http://209.38.200.9:1337'
+    WEBSITE_URL = 'http://104.248.34.81:1337'
 
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'http://209.38.200.9:1337',
-    'http://209.38.200.9:3000',
-    'http://209.38.200.9',
+    'http://104.248.34.81:1337',
+    'http://104.248.34.81:3000',
+    'http://104.248.34.81',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
-    'http://209.38.200.9:1337',
-    'http://209.38.200.9:3000',
-    'http://209.38.200.9',
+    'http://104.248.34.81:1337',
+    'http://104.248.34.81:3000',
+    'http://104.248.34.81',
 ]
 
 # 
