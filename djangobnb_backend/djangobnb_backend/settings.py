@@ -173,7 +173,13 @@ ASGI_APPLICATION = 'djangobnb_backend.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+# Print statements to verify environment variables
+print(f"SQL_ENGINE: {os.environ.get('SQL_ENGINE')}")
+print(f"SQL_DATABASE: {os.environ.get('SQL_DATABASE')}")
+print(f"SQL_USER: {os.environ.get('SQL_USER')}")
+print(f"SQL_PASSWORD: {os.environ.get('SQL_PASSWORD')}")
+print(f"SQL_HOST: {os.environ.get('SQL_HOST')}")
+print(f"SQL_PORT: {os.environ.get('SQL_PORT')}")
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('SQL_ENGINE'),
