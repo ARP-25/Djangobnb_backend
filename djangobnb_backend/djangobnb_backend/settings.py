@@ -1,19 +1,16 @@
 
 from datetime import timedelta
 from pathlib import Path
+
 # Importing os module to access environment variables
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Brings the secret key from the environment variable
 SECRET_KEY = os.environ.get('SECRET_KEY')
-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Brings the debug value from the environment variable
@@ -21,7 +18,6 @@ if os.environ.get('DEBUG') == '1':
     DEBUG = True
 else:
     DEBUG = False
-
 
 # Brings the allowed hosts from the environment variable
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ')
@@ -33,38 +29,28 @@ AUTH_USER_MODEL = 'useraccount.User'
 # For allauth login
 SITE_ID = 1
 
-
 # Check if the application is running in debug mode
 if DEBUG:
     # If in debug mode, set the website URL to the local development server
     WEBSITE_URL = 'http://localhost:8000'
 else:
     # If not in debug mode (i.e., in production), set the website URL to the public IP address and port
-    WEBSITE_URL = 'http://164.90.164.114:1337'
-
-
+    WEBSITE_URL = 'http://209.38.200.9:1337'
 
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'http://164.90.164.114:1337',
-    'http://164.90.164.114:3000',
-    'http://164.90.164.114',
-]
-
-CORS_TRUSTED_ORIGINS = [
-    'http://localhost:3000',
-    'http://164.90.164.114:1337',
-    'http://164.90.164.114:3000',
-    'http://164.90.164.114',
+    'http://209.38.200.9:1337',
+    'http://209.38.200.9:3000',
+    'http://209.38.200.9',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
-    'http://164.90.164.114:1337',
-    'http://164.90.164.114:3000',
-    'http://164.90.164.114',
+    'http://209.38.200.9:1337',
+    'http://209.38.200.9:3000',
+    'http://209.38.200.9',
 ]
 
 # 
@@ -74,13 +60,6 @@ SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
 CSRF_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
-
-# CORS_ALLOW_CREDENTIALS = True
-# SESSION_COOKIE_SECURE = False
-# CSRF_COOKIE_SECURE = False
-# SESSION_COOKIE_SAMESITE = 'Lax'
-# CSRF_COOKIE_SAMESITE = 'Lax'
-
 
 # SIMEPLE_JWT settings
 SIMPLE_JWT = {
@@ -94,7 +73,6 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
 }
-
 
 # Allauth settings
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
