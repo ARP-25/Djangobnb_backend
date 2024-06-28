@@ -1,84 +1,43 @@
-version: '3.9'
-
+version: "3.8"
 
 services:
-  nginx:
-    build: ./nginx
-    ports:
-    # External Port (1337): This is the port on your host machine (e.g., DigitalOcean server) that is exposed to the outside world. Nginx listens for incoming traffic on this port.
-    # Internal Port (80): Inside the Nginx container, it listens on port 80. This is standard for web servers and makes configuration simpler inside the container.
-      - "1337:80"
-    depends_on:
-      - web
-      - daphne
-      - frontend
-
-
-    # Newly added
-    # This volume is used to store media and static files uploaded by users. It is shared between the Nginx and Django containers.
-    volumes:
-      - media_volume:/usr/src/djangobnb_backend/media
-      - static_volume:/usr/src/djangobnb_backend/static
-
-
-  web:
-    build: ./djangobnb_backend
-    environment:
-      - PYTHONUNBUFFERED=1
-    command: gunicorn djangobnb_backend.wsgi:application --bind 0.0.0.0:8000
-    expose:
-      - "8000" # Expose port 8000 for inter-container networking
-    volumes:
-      - ./djangobnb_backend/:/usr/src/djangobnb_backend
-
-
-      # Newly added
-      # This volume is used to store media and static files uploaded by users. It is shared between the Nginx and Django containers.
-      - media_volume:/usr/src/djangobnb_backend/media
-      - static_volume:/usr/src/djangobnb_backend/static
-
-
-    env_file:
-      - ./.env
-    depends_on:
-      - db
-
-
-  daphne:
-    build: ./djangobnb_backend
-    command: daphne -b 0.0.0.0 -p 8002 djangobnb_backend.asgi:application
-    expose:
-      - "8002" # Expose port 8002 for inter-container networking
-    env_file:
-      - ./.env
-    depends_on:
-      - db
-
-
-  db:
-    image: postgres:15
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=postgresuser
-      - POSTGRES_PASSWORD=postgrespassword
-      - POSTGRES_DB=postgresdb
-
-
-  frontend:
-    build: ../Djangobnb_frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - web
-      - daphne
-
+    nginx:
+        build: ./nginx
+        ports:
+            - 1337:80
+        depends_on:
+            - web
+        volumes:
+            - media_volume:/usr/src/djangobnb_backend/media
+    web:
+        build: ./djangobnb_backend
+        command: gunicorn djangobnb_backend.wsgi:application --bind 0.0.0.0:8000
+        volumes:
+            - ./djangobnb_backend/:/usr/src/djangobnb_backend/
+            - media_volume:/usr/src/djangobnb_backend/media
+        expose:
+            - 8000
+        env_file:
+            - ./.env.dev
+        depends_on:
+            - db
+            - daphne
+    daphne:
+        build: ./djangobnb_backend
+        command: daphne --bind 0.0.0.0 -p 8002 djangobnb_backend.asgi:application
+        ports:
+            - 8002:8002
+        env_file:
+            - ./.env.dev
+    db:
+        image: postgres:15
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=postgresuser
+            - POSTGRES_PASSWORD=postgrespassword
+            - POSTGRES_DB=djangobnb
 
 volumes:
-  postgres_data:
-
-
-  # Newly added
-  # This volume is used to store media and static files uploaded by users. It is shared between the Nginx and Django containers.
-  media_volume:
-  static_volume:
+    postgres_data:
+    media_volume:
