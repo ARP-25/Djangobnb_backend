@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+    nginx:
+        build: ./nginx
+        ports:
+            - "80:80"
+            - "443:443"
+        depends_on:
+            - web
+            - daphne
+        volumes:
+            - media_volume:/usr/src/djangobnb_backend/media
+            - static_volume:/usr/src/djangobnb_backend/static
+            - /var/www/certbot:/var/www/certbot
+            - /var/certbot/conf:/etc/letsencrypt
+        restart: unless-stopped
+
+    web:
+        build: ./djangobnb_backend
+        command: gunicorn djangobnb_backend.wsgi:application --bind 0.0.0.0:8000
+        volumes:
+            - ./djangobnb_backend/:/usr/src/djangobnb_backend/
+            - media_volume:/usr/src/djangobnb_backend/media
+            - static_volume:/usr/src/djangobnb_backend/static
+        expose:
+            - "8000"
+        env_file:
+            - ./.env
+        depends_on:
+            - db
+
+    daphne:
+        build: ./djangobnb_backend
+        command: daphne --bind 0.0.0.0 -p 8002 djangobnb_backend.asgi:application
+        ports:
+            - "8002:8002"
+        env_file:
+            - ./.env
+        depends_on:
+            - db
+
+    db:
+        image: postgres:15
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=postgresuser
+            - POSTGRES_PASSWORD=postgrespassword
+            - POSTGRES_DB=djangobnb
+
+    certbot:
+        image: certbot/certbot:latest
+        volumes:
+            - /var/certbot/conf:/etc/letsencrypt
+            - /var/www/certbot:/var/www/certbot
+        depends_on:
+            - nginx
+
+volumes:
+    postgres_data:
+    media_volume:
+    static_volume:
