@@ -14,10 +14,13 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Brings the debug value from the environment variable
+
 if os.environ.get('DEBUG') == '1':
     DEBUG = True
 else:
     DEBUG = False
+print(f"DEBUG Value in .env =============== {os.environ.get('DEBUG')}")
+print(f"DEBUG Value in settings.py =============== {DEBUG}")
 
 # Brings the allowed hosts from the environment variable
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ')
@@ -36,6 +39,7 @@ if DEBUG:
 else:
     # If not in debug mode (i.e., in production), set the website URL to the public IP address and port
     WEBSITE_URL = 'http://104.248.34.81:1337'
+print(f"WEBSITE_URL =================== {WEBSITE_URL}")
 
 
 # CORS settings
