@@ -19,11 +19,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 #
 #
 #
-#if os.environ.get('DEBUG') == '1':
-#    DEBUG = True
-#else:
-#    DEBUG = False
-DEBUG = True
+if os.environ.get('DEBUG') == '1':
+    DEBUG = True
+else:
+    DEBUG = False
 print(f"DEBUG Value in .env =============== {os.environ.get('DEBUG')}")
 print(f"DEBUG Value in settings.py =============== {DEBUG}")
 #
@@ -46,14 +45,13 @@ SITE_ID = 1
 #
 #
 # Check if the application is running in debug mode
-#if DEBUG:
-#    # If in debug mode, set the website URL to the local development server
-#    WEBSITE_URL = 'http://localhost:8000'
-#else:
-#    # If not in debug mode (i.e., in production), set the website URL to the public IP address and port
-#    WEBSITE_URL = 'https://djangobnb.com'
-WEBSITE_URL = 'https://djangobnb.com'
-print(f"WEBSITE_URL =================== {WEBSITE_URL}")
+if DEBUG:
+    # If in debug mode, set the website URL to the local development server
+    WEBSITE_URL = 'http://localhost:8000'
+else:
+    # If not in debug mode (i.e., in production), set the website URL to the public IP address and port
+    WEBSITE_URL = 'https://djangobnb.com'
+WEBSITE_URL = 'https://djangobnb.com'print(f"WEBSITE_URL =================== {WEBSITE_URL}")
 #
 #
 #
