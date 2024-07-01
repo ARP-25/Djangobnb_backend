@@ -49,7 +49,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://104.248.34.81:3000',
     'http://104.248.34.81',
     'https://djangobnb.com',
-    'https://djangobnb.netlify.com',
+    'https://djangobnb.netlify.app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -58,7 +58,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://104.248.34.81:3000',
     'http://104.248.34.81',
     'https://djangobnb.com',
-    'https://djangobnb.netlify.com',
+    'https://djangobnb.netlify.app',
 ]
 
 # 
