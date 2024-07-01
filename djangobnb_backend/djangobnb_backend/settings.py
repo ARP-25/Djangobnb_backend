@@ -51,7 +51,7 @@ if DEBUG:
 else:
     # If not in debug mode (i.e., in production), set the website URL to the public IP address and port
     WEBSITE_URL = 'https://djangobnb.com'
-WEBSITE_URL = 'https://djangobnb.com'print(f"WEBSITE_URL =================== {WEBSITE_URL}")
+print(f"WEBSITE_URL =================== {WEBSITE_URL}")
 #
 #
 #
