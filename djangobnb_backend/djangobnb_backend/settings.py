@@ -38,7 +38,7 @@ if DEBUG:
     WEBSITE_URL = 'http://localhost:8000'
 else:
     # If not in debug mode (i.e., in production), set the website URL to the public IP address and port
-    WEBSITE_URL = 'http://104.248.34.81:1337'
+    WEBSITE_URL = 'https://djangobnb.com'
 print(f"WEBSITE_URL =================== {WEBSITE_URL}")
 
 
@@ -48,6 +48,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://104.248.34.81:1337',
     'http://104.248.34.81:3000',
     'http://104.248.34.81',
+    'https://djangobnb.com',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -55,6 +56,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://104.248.34.81:1337',
     'http://104.248.34.81:3000',
     'http://104.248.34.81',
+    'https://djangobnb.com',
 ]
 
 # 
