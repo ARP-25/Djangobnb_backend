@@ -11,6 +11,8 @@ services:
         volumes:
             - media_volume:/usr/src/djangobnb_backend/media
             - static_volume:/usr/src/djangobnb_backend/static
+            - /etc/letsencrypt:/etc/letsencrypt
+            - /var/www/certbot:/var/www/certbot
 
     web:
         build: ./djangobnb_backend

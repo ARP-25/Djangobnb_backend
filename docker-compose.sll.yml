@@ -40,6 +40,14 @@ services:
         depends_on:
             - db
 
+    frontend:
+        build:
+            context: ../Djangobnb_frontend
+        volumes:
+            - ../Djangobnb_frontend:/app
+        expose:
+            - "80"
+
     db:
         image: postgres:15
         volumes:
