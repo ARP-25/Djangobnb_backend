@@ -203,6 +203,9 @@ def create_property(request):
 @api_view(['POST'])
 def book_property(request, pk):
     try:
+
+        #
+        # Getting form data from the post request
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
         number_of_nights = request.POST.get('number_of_nights')
@@ -210,6 +213,20 @@ def book_property(request, pk):
         guests = request.POST.get('guests')
 
         property = Property.objects.get(pk=pk)
+
+        #
+        # Check for overlapping reservations
+        overlapping_reservations = Reservation.objects.filter(
+            property=property,
+            start_date__lt=end_date,
+            end_date__gt=start_date
+        ).exists()
+
+        if overlapping_reservations:
+            return JsonResponse({"message": "Property is already booked for the selected dates", "success": False}, status=400)
+        
+        #
+        # Create reservation
         Reservation.objects.create(
             property=property,
             start_date=start_date,
